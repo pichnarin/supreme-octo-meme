@@ -1,126 +1,263 @@
-<div class="p-6">
-  <div class="max-w-6xl mx-auto">
+<div class="p-6 bg-gray-50 min-h-screen">
+  <div class="max-w-7xl mx-auto">
+    <!-- Welcome Header -->
+    <div class="mb-6 animate-fade-in">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">
+        {{ 'dashboard.welcome' | translate }}
+      </h1>
+      <p class="text-gray-600" *ngIf="currentUser">
+        {{ 'dashboard.welcomeBack' | translate }}, <span class="font-semibold text-indigo-600">{{ currentUser.fullName }}</span>
+      </p>
+    </div>
+
     <!-- Stats Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-      <div class="bg-white rounded-lg shadow p-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6 animate-slide-up">
+      <!-- Total Employees -->
+      <div class="bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 p-6 border border-gray-100">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm text-gray-600 mb-1">Total Employees</p>
-            <p class="text-3xl font-bold text-gray-800">245</p>
+            <p class="text-sm font-medium text-gray-600 mb-1">{{ 'dashboard.totalEmployees' | translate }}</p>
+            <p-skeleton *ngIf="loading" width="5rem" height="2.5rem"></p-skeleton>
+            <p *ngIf="!loading && stats" class="text-3xl font-bold text-gray-900">{{ stats.totalEmployees }}</p>
           </div>
-          <div class="bg-blue-100 rounded-full p-3">
-            <i class="pi pi-users text-2xl text-blue-600"></i>
+          <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-full p-4">
+            <i class="pi pi-users text-3xl text-blue-600"></i>
           </div>
+        </div>
+        <div *ngIf="!loading && stats" class="mt-3 flex items-center text-sm">
+          <i class="pi pi-building text-gray-500 mr-2"></i>
+          <span class="text-gray-600">{{ stats.totalDepartments }} {{ 'dashboard.departments' | translate }}</span>
         </div>
       </div>
 
-      <div class="bg-white rounded-lg shadow p-6">
+      <!-- Present Today -->
+      <div class="bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 p-6 border border-gray-100">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm text-gray-600 mb-1">Present Today</p>
-            <p class="text-3xl font-bold text-gray-800">238</p>
+            <p class="text-sm font-medium text-gray-600 mb-1">{{ 'dashboard.presentToday' | translate }}</p>
+            <p-skeleton *ngIf="loading" width="5rem" height="2.5rem"></p-skeleton>
+            <p *ngIf="!loading && stats" class="text-3xl font-bold text-gray-900">{{ stats.presentToday }}</p>
           </div>
-          <div class="bg-green-100 rounded-full p-3">
-            <i class="pi pi-check-circle text-2xl text-green-600"></i>
+          <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-full p-4">
+            <i class="pi pi-check-circle text-3xl text-green-600"></i>
           </div>
+        </div>
+        <div *ngIf="!loading && stats" class="mt-3 flex items-center text-sm">
+          <i class="pi pi-chart-line text-gray-500 mr-2"></i>
+          <span class="text-green-600 font-semibold">{{ stats.monthlyAttendanceRate }}%</span>
+          <span class="text-gray-600 ml-1">{{ 'dashboard.attendanceRate' | translate }}</span>
         </div>
       </div>
 
-      <div class="bg-white rounded-lg shadow p-6">
+      <!-- On Leave -->
+      <div class="bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 p-6 border border-gray-100">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm text-gray-600 mb-1">On Leave</p>
-            <p class="text-3xl font-bold text-gray-800">7</p>
+            <p class="text-sm font-medium text-gray-600 mb-1">{{ 'dashboard.onLeave' | translate }}</p>
+            <p-skeleton *ngIf="loading" width="5rem" height="2.5rem"></p-skeleton>
+            <p *ngIf="!loading && stats" class="text-3xl font-bold text-gray-900">{{ stats.onLeave }}</p>
           </div>
-          <div class="bg-yellow-100 rounded-full p-3">
-            <i class="pi pi-calendar-times text-2xl text-yellow-600"></i>
+          <div class="bg-gradient-to-br from-amber-50 to-amber-100 rounded-full p-4">
+            <i class="pi pi-calendar-times text-3xl text-amber-600"></i>
           </div>
+        </div>
+        <div *ngIf="!loading && stats" class="mt-3 flex items-center text-sm">
+          <i class="pi pi-calendar text-gray-500 mr-2"></i>
+          <span class="text-gray-600">{{ 'dashboard.thisMonth' | translate }}</span>
         </div>
       </div>
 
-      <div class="bg-white rounded-lg shadow p-6">
+      <!-- Pending Payroll -->
+      <div class="bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 p-6 border border-gray-100">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm text-gray-600 mb-1">Pending Payroll</p>
-            <p class="text-3xl font-bold text-gray-800">12</p>
+            <p class="text-sm font-medium text-gray-600 mb-1">{{ 'dashboard.pendingPayroll' | translate }}</p>
+            <p-skeleton *ngIf="loading" width="5rem" height="2.5rem"></p-skeleton>
+            <p *ngIf="!loading && stats" class="text-3xl font-bold text-gray-900">{{ stats.pendingPayroll }}</p>
           </div>
-          <div class="bg-purple-100 rounded-full p-3">
-            <i class="pi pi-money-bill text-2xl text-purple-600"></i>
+          <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-full p-4">
+            <i class="pi pi-money-bill text-3xl text-purple-600"></i>
+          </div>
+        </div>
+        <div *ngIf="!loading && stats" class="mt-3 flex items-center text-sm">
+          <i class="pi pi-dollar text-gray-500 mr-2"></i>
+          <span class="text-gray-600">${{ stats.averageSalary }} {{ 'dashboard.avgSalary' | translate }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="mb-6 animate-slide-up" style="animation-delay: 0.1s">
+      <h2 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
+        <i class="pi pi-bolt text-indigo-600 mr-2"></i>
+        {{ 'dashboard.quickActions' | translate }}
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <p-skeleton *ngIf="loading" height="8rem" styleClass="mb-2" [ngClass]="'w-full'"></p-skeleton>
+        <p-skeleton *ngIf="loading" height="8rem" styleClass="mb-2" [ngClass]="'w-full'"></p-skeleton>
+        <p-skeleton *ngIf="loading" height="8rem" styleClass="mb-2" [ngClass]="'w-full'"></p-skeleton>
+
+        <div *ngFor="let action of quickActions"
+             (click)="navigateToAction(action)"
+             class="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 p-5 border border-gray-100 cursor-pointer group hover:border-indigo-300">
+          <div class="flex items-start gap-4">
+            <div class="rounded-lg p-3 transition-transform group-hover:scale-110 duration-300" [ngClass]="action.iconColor">
+              <i [class]="'pi ' + action.icon + ' text-2xl'"></i>
+            </div>
+            <div class="flex-1">
+              <h3 class="font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">
+                {{ action.title }}
+              </h3>
+              <p class="text-sm text-gray-600">{{ action.description }}</p>
+            </div>
+            <i class="pi pi-arrow-right text-gray-400 group-hover:text-indigo-600 group-hover:translate-x-1 transition-all"></i>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Welcome Message -->
-    <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
-      <div class="text-center py-8 px-6 bg-gradient-to-r from-green-50 to-emerald-50">
-        <i class="pi pi-check-circle text-6xl text-green-500 mb-4"></i>
-        <h2 class="text-2xl font-semibold text-gray-800 mb-2">{{ 'dashboard.welcome' | translate }}</h2>
-        <p class="text-gray-600" *ngIf="currentUser">
-          {{ 'dashboard.loggedInAs' | translate }}: <strong>{{ currentUser.fullName }}</strong>
-        </p>
-        <p class="text-gray-600 mt-2">{{ 'dashboard.description' | translate }}</p>
+    <!-- Charts Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6 animate-slide-up" style="animation-delay: 0.2s">
+      <!-- Attendance Trend Chart -->
+      <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+        <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
+          <i class="pi pi-chart-line text-green-600 mr-2"></i>
+          {{ 'dashboard.attendanceTrend' | translate }}
+        </h3>
+        <div *ngIf="loading" class="space-y-2">
+          <p-skeleton height="250px"></p-skeleton>
+        </div>
+        <div *ngIf="!loading && attendanceChartData" style="height: 300px">
+          <p-chart type="line" [data]="attendanceChartData" [options]="attendanceChartOptions"></p-chart>
+        </div>
       </div>
 
-      <!-- User Info -->
-      <div class="p-6" *ngIf="currentUser">
-        <div class="bg-gray-50 rounded-lg p-6 space-y-4">
-          <div class="flex justify-between items-center py-3 border-b border-gray-200">
-            <span class="font-medium text-gray-700">{{ 'dashboard.username' | translate }}:</span>
-            <span class="text-gray-900 font-medium">{{ currentUser.username }}</span>
-          </div>
+      <!-- Payroll Trend Chart -->
+      <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+        <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
+          <i class="pi pi-chart-bar text-indigo-600 mr-2"></i>
+          {{ 'dashboard.payrollTrend' | translate }}
+        </h3>
+        <div *ngIf="loading" class="space-y-2">
+          <p-skeleton height="250px"></p-skeleton>
+        </div>
+        <div *ngIf="!loading && payrollChartData" style="height: 300px">
+          <p-chart type="bar" [data]="payrollChartData" [options]="payrollChartOptions"></p-chart>
+        </div>
+      </div>
+    </div>
 
-          <div class="flex justify-between items-center py-3 border-b border-gray-200">
-            <span class="font-medium text-gray-700">{{ 'dashboard.email' | translate }}:</span>
-            <span class="text-gray-900 font-medium">{{ currentUser.email }}</span>
-          </div>
+    <!-- Recent Activity Feed -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-slide-up" style="animation-delay: 0.3s">
+      <!-- Activity Feed -->
+      <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-bold text-gray-900 flex items-center">
+            <i class="pi pi-history text-purple-600 mr-2"></i>
+            {{ 'dashboard.recentActivity' | translate }}
+          </h3>
+          <p-button
+            label="{{ 'dashboard.viewAll' | translate }}"
+            [text]="true"
+            size="small"
+            icon="pi pi-arrow-right"
+            iconPos="right">
+          </p-button>
+        </div>
 
-          <div class="flex justify-between items-center py-3 border-b border-gray-200">
-            <span class="font-medium text-gray-700">{{ 'dashboard.role' | translate }}:</span>
-            <span>
-              <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase"
-                    [ngClass]="{
-                      'bg-amber-100 text-amber-800': currentUser.role === 'admin',
-                      'bg-blue-100 text-blue-800': currentUser.role === 'hr_manager',
-                      'bg-green-100 text-green-800': currentUser.role === 'hr_staff',
-                      'bg-gray-100 text-gray-800': currentUser.role === 'viewer'
-                    }">
-                {{ currentUser.role }}
-              </span>
-            </span>
-          </div>
-
-          <div class="flex justify-between items-center py-3">
-            <span class="font-medium text-gray-700">{{ 'dashboard.status' | translate }}:</span>
-            <span>
-              <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase"
-                    [ngClass]="{
-                      'bg-green-100 text-green-800': currentUser.status === 'active',
-                      'bg-red-100 text-red-800': currentUser.status === 'inactive'
-                    }">
-                {{ currentUser.status }}
-              </span>
-            </span>
+        <div *ngIf="loading" class="space-y-3">
+          <div *ngFor="let item of [1,2,3,4]" class="flex gap-3">
+            <p-skeleton shape="circle" size="2.5rem"></p-skeleton>
+            <div class="flex-1">
+              <p-skeleton width="100%" height="1rem" styleClass="mb-2"></p-skeleton>
+              <p-skeleton width="70%" height="0.8rem"></p-skeleton>
+            </div>
           </div>
         </div>
 
-        <!-- Next Steps -->
-        <div class="mt-6 bg-blue-50 border-l-4 border-blue-500 rounded p-6">
-          <h3 class="text-lg font-semibold text-blue-900 mb-3">{{ 'dashboard.nextSteps' | translate }}</h3>
-          <ul class="space-y-2 text-blue-800">
-            <li class="flex items-start">
-              <i class="pi pi-check-circle text-blue-500 mt-1 mr-2"></i>
-              <span>{{ 'dashboard.step1' | translate }}</span>
-            </li>
-            <li class="flex items-start">
-              <i class="pi pi-check-circle text-blue-500 mt-1 mr-2"></i>
-              <span>{{ 'dashboard.step2' | translate }}</span>
-            </li>
-            <li class="flex items-start">
-              <i class="pi pi-check-circle text-blue-500 mt-1 mr-2"></i>
-              <span>{{ 'dashboard.step3' | translate }}</span>
-            </li>
-          </ul>
+        <div *ngIf="!loading" class="space-y-4">
+          <div *ngFor="let activity of recentActivities"
+               class="flex gap-4 p-3 rounded-lg hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-200">
+            <div class="flex-shrink-0">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center"
+                   [ngClass]="activity.iconColor.includes('green') ? 'bg-green-100' :
+                              activity.iconColor.includes('blue') ? 'bg-blue-100' :
+                              activity.iconColor.includes('orange') ? 'bg-orange-100' :
+                              activity.iconColor.includes('purple') ? 'bg-purple-100' :
+                              activity.iconColor.includes('indigo') ? 'bg-indigo-100' :
+                              activity.iconColor.includes('red') ? 'bg-red-100' : 'bg-gray-100'">
+                <i [class]="'pi ' + activity.icon + ' ' + activity.iconColor"></i>
+              </div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="font-medium text-gray-900 mb-1">{{ activity.title }}</p>
+              <p class="text-sm text-gray-600 mb-2">{{ activity.description }}</p>
+              <div class="flex items-center gap-3 text-xs text-gray-500">
+                <span class="flex items-center">
+                  <i class="pi pi-clock mr-1"></i>
+                  {{ getActivityTimeAgo(activity.timestamp) }}
+                </span>
+                <span *ngIf="activity.user" class="flex items-center">
+                  <i class="pi pi-user mr-1"></i>
+                  {{ activity.user }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Info Card -->
+      <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+        <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
+          <i class="pi pi-user text-indigo-600 mr-2"></i>
+          {{ 'dashboard.userInfo' | translate }}
+        </h3>
+
+        <div *ngIf="currentUser" class="space-y-4">
+          <div class="flex flex-col items-center pb-4 border-b border-gray-200">
+            <p-avatar
+              [label]="getUserInitials(currentUser.fullName)"
+              styleClass="bg-gradient-to-br from-indigo-500 to-purple-600 text-white"
+              size="xlarge"
+              shape="circle">
+            </p-avatar>
+            <h4 class="mt-3 text-lg font-semibold text-gray-900">{{ currentUser.fullName }}</h4>
+            <p class="text-sm text-gray-600">{{ currentUser.email }}</p>
+            <p-tag
+              [value]="currentUser.role"
+              [severity]="getRoleSeverity(currentUser.role)"
+              styleClass="mt-2">
+            </p-tag>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex justify-between items-center py-2">
+              <span class="text-sm font-medium text-gray-600">{{ 'dashboard.username' | translate }}</span>
+              <span class="text-sm text-gray-900 font-medium">{{ currentUser.username }}</span>
+            </div>
+            <div class="flex justify-between items-center py-2">
+              <span class="text-sm font-medium text-gray-600">{{ 'dashboard.status' | translate }}</span>
+              <p-tag
+                [value]="currentUser.status"
+                [severity]="currentUser.status === 'active' ? 'success' : 'danger'"
+                styleClass="text-xs">
+              </p-tag>
+            </div>
+            <div *ngIf="currentUser.lastLogin" class="flex justify-between items-center py-2">
+              <span class="text-sm font-medium text-gray-600">{{ 'dashboard.lastLogin' | translate }}</span>
+              <span class="text-sm text-gray-900">{{ currentUser.lastLogin | date: 'short' }}</span>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-gray-200">
+            <p-button
+              label="{{ 'dashboard.viewProfile' | translate }}"
+              icon="pi pi-user"
+              styleClass="w-full"
+              [outlined]="true">
+            </p-button>
+          </div>
         </div>
       </div>
     </div>

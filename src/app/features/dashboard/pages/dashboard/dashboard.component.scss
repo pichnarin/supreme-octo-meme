@@ -1,1 +1,40 @@
 // All styles handled by Tailwind CSS
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+:host ::ng-deep {
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out;
+    animation-fill-mode: both;
+  }
+
+  // Chart responsiveness
+  .p-chart {
+    canvas {
+      max-height: 300px !important;
+    }
+  }
+}

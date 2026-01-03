@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 // PrimeNG imports
 import { CardModule } from 'primeng/card';
@@ -12,6 +12,8 @@ import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { MessageModule } from 'primeng/message';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 import { AuthService } from '../../../../core/services/auth.service';
 import { LanguageService, Language } from '../../../../core/services/language.service';
@@ -30,8 +32,10 @@ import { LanguageService, Language } from '../../../../core/services/language.se
     ButtonModule,
     CheckboxModule,
     DropdownModule,
-    MessageModule
+    MessageModule,
+    ToastModule
   ],
+  providers: [MessageService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -40,6 +44,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   errorMessage = '';
   returnUrl = '/dashboard';
+  showDemoCredentials = false;
 
   languages: Language[] = [];
   selectedLanguage: Language | undefined;
@@ -57,7 +62,9 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private languageService: LanguageService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private messageService: MessageService,
+    private translate: TranslateService
   ) {
     this.languages = this.languageService.availableLanguages;
     this.selectedLanguage = this.languageService.getCurrentLanguageInfo();
@@ -108,6 +115,21 @@ export class LoginComponent implements OnInit {
 
   fillCredentials(username: string, password: string): void {
     this.loginForm.patchValue({ username, password });
+    this.messageService.add({
+      severity: 'info',
+      summary: this.translate.instant('auth.login.credentialsFilled'),
+      detail: this.translate.instant('auth.login.credentialsFilledDetail'),
+      life: 2000
+    });
+  }
+
+  onForgotPassword(): void {
+    this.messageService.add({
+      severity: 'info',
+      summary: this.translate.instant('auth.login.forgotPasswordTitle'),
+      detail: this.translate.instant('auth.login.forgotPasswordMessage'),
+      life: 4000
+    });
   }
 
   private markFormGroupTouched(formGroup: FormGroup): void {
