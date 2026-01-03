@@ -1,0 +1,42 @@
+<div class="flex h-screen overflow-hidden bg-gray-50">
+  <!-- Sidebar - Desktop -->
+  <div class="hidden md:block">
+    <app-sidebar
+      [collapsed]="sidebarCollapsed"
+      (toggleCollapse)="toggleSidebar()">
+    </app-sidebar>
+  </div>
+
+  <!-- Sidebar - Mobile (Overlay) -->
+  <div
+    *ngIf="mobileSidebarOpen"
+    class="fixed inset-0 z-40 md:hidden"
+    (click)="closeMobileSidebar()">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+
+    <!-- Sidebar -->
+    <div
+      class="relative h-full"
+      (click)="$event.stopPropagation()">
+      <app-sidebar
+        [collapsed]="false"
+        (toggleCollapse)="closeMobileSidebar()">
+      </app-sidebar>
+    </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header -->
+    <app-header (toggleSidebar)="toggleSidebar()"></app-header>
+
+    <!-- Breadcrumb -->
+    <app-breadcrumb></app-breadcrumb>
+
+    <!-- Page Content -->
+    <main class="flex-1 overflow-y-auto">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="p-6">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Welcome Message -->
+    <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+      <div class="text-center py-8 px-6 bg-gradient-to-r from-green-50 to-emerald-50">
+        <i class="pi pi-check-circle text-6xl text-green-500 mb-4"></i>
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">{{ 'dashboard.welcome' | translate }}</h2>
+        <p class="text-gray-600" *ngIf="currentUser">
+          {{ 'dashboard.loggedInAs' | translate }}: <strong>{{ currentUser.fullName }}</strong>
+        </p>
+        <p class="text-gray-600 mt-2">{{ 'dashboard.description' | translate }}</p>
+      </div>
+    </div>
+  </div>
+</div>

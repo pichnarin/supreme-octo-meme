@@ -1,0 +1,16 @@
+// All styles handled by Tailwind CSS
+
+// PrimeNG specific overrides
+::ng-deep {
+  .ng-invalid.ng-dirty {
+    border-color: #ef4444;
+  }
+
+  .p-password {
+    width: 100%;
+
+    .p-inputtext {
+      width: 100%;
+    }
+  }
+}

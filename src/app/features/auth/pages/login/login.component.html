@@ -1,0 +1,136 @@
+<div class="p-8">
+  <!-- Header -->
+  <div class="text-center mb-6">
+    <div class="mb-4">
+      <i class="pi pi-wallet text-6xl text-indigo-600"></i>
+      <h1 class="text-2xl font-semibold text-gray-800 mt-4 mb-2">{{ 'app.title' | translate }}</h1>
+      <p class="text-lg text-indigo-600 font-medium">{{ 'app.company' | translate }}</p>
+    </div>
+
+    <!-- Language Switcher -->
+    <div class="flex justify-center">
+      <p-dropdown
+        [options]="languages"
+        [(ngModel)]="selectedLanguage"
+        (onChange)="onLanguageChange($event.value)"
+        optionLabel="nativeName"
+        styleClass="w-40">
+        <ng-template pTemplate="selectedItem">
+          <div class="flex items-center gap-2" *ngIf="selectedLanguage">
+            <span>{{ selectedLanguage.flag }}</span>
+            <span>{{ selectedLanguage.nativeName }}</span>
+          </div>
+        </ng-template>
+        <ng-template let-language pTemplate="item">
+          <div class="flex items-center gap-2">
+            <span>{{ language.flag }}</span>
+            <span>{{ language.nativeName }}</span>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+  </div>
+
+  <!-- Login Card Header -->
+  <div class="text-center mb-6">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-2">{{ 'auth.login.title' | translate }}</h2>
+    <p class="text-gray-600 text-sm">{{ 'auth.login.subtitle' | translate }}</p>
+  </div>
+
+  <!-- Error Message -->
+  <p-message
+    *ngIf="errorMessage"
+    severity="error"
+    [text]="errorMessage"
+    styleClass="w-full mb-4">
+  </p-message>
+
+  <!-- Login Form -->
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <!-- Username -->
+    <div class="mb-4">
+      <label for="username" class="block text-sm font-medium text-gray-700 mb-2">
+        {{ 'auth.login.username' | translate }} <span class="text-red-500">*</span>
+      </label>
+      <input
+        pInputText
+        id="username"
+        formControlName="username"
+        [placeholder]="'auth.login.usernamePlaceholder' | translate"
+        class="w-full"
+        [class.ng-invalid]="usernameInvalid"
+        [class.ng-dirty]="usernameInvalid"
+        autocomplete="username" />
+      <small class="text-red-500 text-xs mt-1 block" *ngIf="usernameInvalid">
+        {{ 'auth.login.usernameRequired' | translate }}
+      </small>
+    </div>
+
+    <!-- Password -->
+    <div class="mb-4">
+      <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+        {{ 'auth.login.password' | translate }} <span class="text-red-500">*</span>
+      </label>
+      <p-password
+        id="password"
+        formControlName="password"
+        [placeholder]="'auth.login.passwordPlaceholder' | translate"
+        styleClass="w-full"
+        [inputStyle]="{'width': '100%'}"
+        [class.ng-invalid]="passwordInvalid"
+        [class.ng-dirty]="passwordInvalid"
+        [toggleMask]="true"
+        [feedback]="false"
+        autocomplete="current-password">
+      </p-password>
+      <small class="text-red-500 text-xs mt-1 block" *ngIf="passwordInvalid">
+        {{ 'auth.login.passwordRequired' | translate }}
+      </small>
+    </div>
+
+    <!-- Remember Me -->
+    <div class="flex items-center gap-2 mb-6">
+      <p-checkbox
+        formControlName="rememberMe"
+        [binary]="true"
+        inputId="rememberMe">
+      </p-checkbox>
+      <label for="rememberMe" class="text-sm cursor-pointer">{{ 'auth.login.rememberMe' | translate }}</label>
+    </div>
+
+    <!-- Submit Button -->
+    <p-button
+      type="submit"
+      [label]="'auth.login.loginButton' | translate"
+      icon="pi pi-sign-in"
+      styleClass="w-full"
+      [loading]="loading"
+      [disabled]="loading">
+    </p-button>
+  </form>
+
+  <!-- Demo Credentials -->
+  <div class="mt-8">
+    <div class="relative flex items-center my-6">
+      <div class="flex-grow border-t border-gray-300"></div>
+      <span class="flex-shrink mx-4 text-gray-600 text-sm font-medium">{{ 'auth.login.demoCredentials' | translate }}</span>
+      <div class="flex-grow border-t border-gray-300"></div>
+    </div>
+
+    <div class="space-y-3">
+      <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200" *ngFor="let user of mockUsers">
+        <div class="flex flex-col gap-1">
+          <strong class="text-sm text-gray-800">{{ user.role }}</strong>
+          <span class="text-xs text-gray-600 font-mono">{{ user.username }} / {{ user.password }}</span>
+        </div>
+        <p-button
+          [label]="'auth.login.use' | translate"
+          size="small"
+          severity="secondary"
+          [text]="true"
+          (onClick)="fillCredentials(user.username, user.password)">
+        </p-button>
+      </div>
+    </div>
+  </div>
+</div>

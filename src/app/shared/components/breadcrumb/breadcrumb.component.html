@@ -1,0 +1,27 @@
+<nav class="bg-gray-50 border-b border-gray-200 px-4 py-3" *ngIf="breadcrumbs.length > 0">
+  <ol class="flex items-center space-x-2 text-sm">
+    <li>
+      <a
+        routerLink="/dashboard"
+        class="flex items-center text-gray-600 hover:text-indigo-600 transition-colors">
+        <i class="pi pi-home mr-2"></i>
+        <span class="hidden sm:inline">{{ 'menu.dashboard' | translate }}</span>
+      </a>
+    </li>
+
+    <li *ngFor="let breadcrumb of breadcrumbs; let last = last" class="flex items-center">
+      <i class="pi pi-angle-right text-gray-400 mx-2"></i>
+      <a
+        *ngIf="!last"
+        [routerLink]="breadcrumb.url"
+        class="text-gray-600 hover:text-indigo-600 transition-colors">
+        {{ breadcrumb.label | translate }}
+      </a>
+      <span
+        *ngIf="last"
+        class="text-gray-800 font-medium">
+        {{ breadcrumb.label | translate }}
+      </span>
+    </li>
+  </ol>
+</nav>
