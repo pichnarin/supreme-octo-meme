@@ -7,6 +7,7 @@ export class StorageService {
   private readonly TOKEN_KEY = 'auth_token';
   private readonly USER_KEY = 'current_user';
   private readonly LANGUAGE_KEY = 'selected_language';
+  private readonly THEME_KEY = 'selected_theme';
 
   // Token management
   setToken(token: string): void {
@@ -42,6 +43,15 @@ export class StorageService {
 
   getLanguage(): string | null {
     return localStorage.getItem(this.LANGUAGE_KEY);
+  }
+
+  // Theme management
+  setTheme(theme: string): void {
+    localStorage.setItem(this.THEME_KEY, theme);
+  }
+
+  getTheme(): string | null {
+    return localStorage.getItem(this.THEME_KEY);
   }
 
   // Clear all storage

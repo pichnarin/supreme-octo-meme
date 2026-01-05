@@ -3,6 +3,11 @@
     "title": "Payroll Management System",
     "company": "SSTM Solutions"
   },
+  "theme": {
+    "toggle": "Toggle theme",
+    "light": "Light mode",
+    "dark": "Dark mode"
+  },
   "auth": {
     "login": {
       "title": "Sign In",

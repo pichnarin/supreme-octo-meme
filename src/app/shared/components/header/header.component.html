@@ -1,4 +1,4 @@
-<header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+<header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm sticky top-0 z-50">
   <div class="flex items-center justify-between px-4 py-3">
     <!-- Left Section: Menu Toggle & Logo -->
     <div class="flex items-center gap-4">
@@ -12,10 +12,10 @@
       </button>
 
       <div class="flex items-center gap-3">
-        <i class="pi pi-wallet text-3xl text-indigo-600"></i>
+        <i class="pi pi-wallet text-3xl text-indigo-600 dark:text-indigo-400"></i>
         <div class="hidden md:block">
-          <h1 class="text-lg font-semibold text-gray-800 leading-tight">{{ 'app.title' | translate }}</h1>
-          <p class="text-xs text-indigo-600 font-medium">{{ 'app.company' | translate }}</p>
+          <h1 class="text-lg font-semibold text-gray-800 dark:text-gray-100 leading-tight">{{ 'app.title' | translate }}</h1>
+          <p class="text-xs text-indigo-600 dark:text-indigo-400 font-medium">{{ 'app.company' | translate }}</p>
         </div>
       </div>
     </div>
@@ -49,14 +49,35 @@
         tooltipPosition="bottom">
       </button>
 
+      <!-- Desktop Theme Toggle -->
+      <button
+        pButton
+        [label]="currentTheme?.name || 'Light'"
+        [icon]="'pi ' + (currentTheme?.icon || 'pi-sun')"
+        class="p-button-text p-button-sm hidden sm:inline-flex"
+        (click)="toggleTheme()"
+        [pTooltip]="'theme.toggle' | translate"
+        tooltipPosition="bottom">
+      </button>
+
+      <!-- Mobile Theme Toggle -->
+      <button
+        pButton
+        [icon]="'pi ' + (currentTheme?.icon || 'pi-sun')"
+        class="p-button-text p-button-rounded sm:hidden"
+        (click)="toggleTheme()"
+        [pTooltip]="'theme.toggle' | translate"
+        tooltipPosition="bottom">
+      </button>
+
       <!-- User Menu -->
       <div class="relative">
         <button
           #userBtn
-          class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
+          class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer"
           (click)="userPanel.toggle($event)">
           <div class="hidden md:block text-right">
-            <div class="text-sm font-medium text-gray-800" *ngIf="currentUser">{{ currentUser.fullName }}</div>
+            <div class="text-sm font-medium text-gray-800 dark:text-gray-100" *ngIf="currentUser">{{ currentUser.fullName }}</div>
             <div class="text-xs" [ngClass]="getRoleBadgeClass() + ' inline-block px-2 py-0.5 rounded-full mt-0.5'" *ngIf="currentUser">
               {{ currentUser.role }}
             </div>
@@ -67,12 +88,12 @@
             shape="circle"
             size="normal">
           </p-avatar>
-          <i class="pi pi-angle-down text-gray-600 text-xs"></i>
+          <i class="pi pi-angle-down text-gray-600 dark:text-gray-300 text-xs"></i>
         </button>
 
         <p-overlayPanel #userPanel appendTo="body" styleClass="w-80">
           <!-- User Info Header -->
-          <div class="flex items-center gap-3 pb-3 border-b border-gray-200" *ngIf="currentUser">
+          <div class="flex items-center gap-3 pb-3 border-b border-gray-200 dark:border-gray-700" *ngIf="currentUser">
             <p-avatar
               [label]="getUserInitials()"
               styleClass="bg-indigo-600 text-white"
@@ -80,8 +101,8 @@
               shape="circle">
             </p-avatar>
             <div class="flex-1">
-              <div class="font-semibold text-gray-800">{{ currentUser.fullName }}</div>
-              <div class="text-sm text-gray-600">{{ currentUser.email }}</div>
+              <div class="font-semibold text-gray-800 dark:text-gray-100">{{ currentUser.fullName }}</div>
+              <div class="text-sm text-gray-600 dark:text-gray-400">{{ currentUser.email }}</div>
               <div class="mt-1">
                 <span class="text-xs font-semibold uppercase px-2 py-1 rounded-full" [ngClass]="getRoleBadgeClass()">
                   {{ currentUser.role }}

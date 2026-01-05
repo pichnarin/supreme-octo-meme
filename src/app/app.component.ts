@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LanguageService } from './core/services/language.service';
+import { ThemeService } from './core/services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +13,14 @@ import { LanguageService } from './core/services/language.service';
 export class AppComponent implements OnInit {
   title = 'payroll-system';
 
-  constructor(private languageService: LanguageService) {}
+  constructor(
+    private languageService: LanguageService,
+    private themeService: ThemeService
+  ) {}
 
   ngOnInit(): void {
     // Language service is initialized in its constructor
-    // This ensures translations are loaded on app start
+    // Theme service is initialized in its constructor
+    // This ensures translations and theme are loaded on app start
   }
 }

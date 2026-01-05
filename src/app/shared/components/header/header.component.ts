@@ -7,6 +7,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { AvatarModule } from 'primeng/avatar';
 import { AuthService } from '../../../core/services/auth.service';
 import { LanguageService, Language } from '../../../core/services/language.service';
+import { ThemeService, Theme } from '../../../core/services/theme.service';
 import { User } from '../../../core/models/user.model';
 
 @Component({
@@ -29,16 +30,19 @@ export class HeaderComponent implements OnInit {
   currentUser: User | null = null;
   languages: Language[] = [];
   currentLanguage: Language | undefined;
+  currentTheme: Theme | undefined;
 
   userMenuItems: any[] = [];
   languageMenuItems: any[] = [];
 
   constructor(
     private authService: AuthService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private themeService: ThemeService
   ) {
     this.languages = this.languageService.availableLanguages;
     this.currentLanguage = this.languageService.getCurrentLanguageInfo();
+    this.currentTheme = this.themeService.getCurrentThemeInfo();
   }
 
   ngOnInit(): void {
@@ -86,6 +90,11 @@ export class HeaderComponent implements OnInit {
     this.languageService.setLanguage(language.code);
     this.currentLanguage = language;
     this.initMenus(); // Refresh menus to update checkmark
+  }
+
+  toggleTheme(): void {
+    this.themeService.toggleTheme();
+    this.currentTheme = this.themeService.getCurrentThemeInfo();
   }
 
   viewProfile(): void {

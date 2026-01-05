@@ -1,5 +1,5 @@
 <aside
-  class="bg-gray-900 text-white h-full overflow-y-auto transition-all duration-300"
+  class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white h-full overflow-y-auto transition-all duration-300 border-r border-gray-200 dark:border-gray-800"
   [ngClass]="collapsed ? 'w-16' : 'w-64'">
 
   <nav class="py-4">
@@ -11,20 +11,20 @@
           <a
             *ngIf="!item.items"
             [routerLink]="item.route"
-            class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 transition-colors cursor-pointer group relative"
+            class="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer group relative"
             [ngClass]="{
-              'bg-indigo-600 hover:bg-indigo-700': isActive(item.route),
+              'bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-700': isActive(item.route),
               'justify-center': collapsed
             }"
             pRipple
             [pTooltip]="collapsed ? (item.label | translate) : ''"
             tooltipPosition="right">
             <i [class]="item.icon + ' text-lg'"
-               [ngClass]="isActive(item.route) ? 'text-white' : 'text-gray-400 group-hover:text-white'"></i>
+               [ngClass]="isActive(item.route) ? 'text-white' : 'text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white'"></i>
             <span
               *ngIf="!collapsed"
               class="flex-1 font-medium"
-              [ngClass]="isActive(item.route) ? 'text-white' : 'text-gray-300'">
+              [ngClass]="isActive(item.route) ? 'text-white' : 'text-gray-700 dark:text-gray-300'">
               {{ item.label | translate }}
             </span>
             <span
@@ -44,20 +44,20 @@
           <div *ngIf="item.items">
             <button
               (click)="toggleSubmenu(item)"
-              class="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-800 transition-colors group"
+              class="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
               [ngClass]="{
-                'bg-gray-800': isExpanded(item) || hasActiveChild(item),
+                'bg-gray-100 dark:bg-gray-800': isExpanded(item) || hasActiveChild(item),
                 'justify-center': collapsed
               }"
               pRipple
               [pTooltip]="collapsed ? (item.label | translate) : ''"
               tooltipPosition="right">
               <i [class]="item.icon + ' text-lg'"
-                 [ngClass]="hasActiveChild(item) ? 'text-indigo-400' : 'text-gray-400 group-hover:text-white'"></i>
+                 [ngClass]="hasActiveChild(item) ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white'"></i>
               <span
                 *ngIf="!collapsed"
                 class="flex-1 text-left font-medium"
-                [ngClass]="hasActiveChild(item) ? 'text-white' : 'text-gray-300'">
+                [ngClass]="hasActiveChild(item) ? 'text-gray-900 dark:text-white' : 'text-gray-700 dark:text-gray-300'">
                 {{ item.label | translate }}
               </span>
               <i
@@ -69,19 +69,19 @@
             <!-- Submenu -->
             <ul
               *ngIf="!collapsed && isExpanded(item)"
-              class="bg-gray-950 bg-opacity-50"
+              class="bg-gray-50 dark:bg-gray-950 dark:bg-opacity-50"
               [@slideDown]>
               <li *ngFor="let child of item.items">
                 <a
                   [routerLink]="child.route"
-                  class="flex items-center gap-3 px-4 py-2.5 pl-12 hover:bg-gray-800 transition-colors cursor-pointer group"
-                  [ngClass]="{'bg-indigo-600 hover:bg-indigo-700': isActive(child.route)}"
+                  class="flex items-center gap-3 px-4 py-2.5 pl-12 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer group"
+                  [ngClass]="{'bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-700': isActive(child.route)}"
                   pRipple>
                   <i [class]="child.icon + ' text-sm'"
-                     [ngClass]="isActive(child.route) ? 'text-white' : 'text-gray-400 group-hover:text-white'"></i>
+                     [ngClass]="isActive(child.route) ? 'text-white' : 'text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white'"></i>
                   <span
                     class="text-sm"
-                    [ngClass]="isActive(child.route) ? 'text-white font-medium' : 'text-gray-300'">
+                    [ngClass]="isActive(child.route) ? 'text-white font-medium' : 'text-gray-700 dark:text-gray-300'">
                     {{ child.label | translate }}
                   </span>
                 </a>
@@ -94,10 +94,10 @@
   </nav>
 
   <!-- Collapse Toggle Button (Bottom) -->
-  <div class="sticky bottom-0 bg-gray-900 border-t border-gray-800 p-4">
+  <div class="sticky bottom-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 p-4">
     <button
       (click)="onToggleCollapse()"
-      class="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors text-gray-400 hover:text-white"
+      class="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
       [pTooltip]="collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'"
       tooltipPosition="right"
       pRipple>

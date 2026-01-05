@@ -3,6 +3,11 @@
     "title": "ប្រព័ន្ធគ្រប់គ្រងប្រាក់បៀវត្ស",
     "company": "SSTM Solutions"
   },
+  "theme": {
+    "toggle": "ប្តូររូបរាង",
+    "light": "ពន្លឺ",
+    "dark": "ងងឹត"
+  },
   "auth": {
     "login": {
       "title": "ចូលប្រើប្រាស់",
