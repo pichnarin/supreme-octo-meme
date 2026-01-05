@@ -110,9 +110,20 @@
 
   .p-password {
     width: 100%;
+    display: block;
 
     .p-inputtext {
       width: 100%;
+      padding-right: 3rem !important; // Add space for the eye icon
+    }
+
+    // Position the eye icon properly
+    .p-password-toggle-icon,
+    button {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
     }
   }
 

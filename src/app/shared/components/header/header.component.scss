@@ -4,4 +4,33 @@
   .p-avatar {
     cursor: pointer;
   }
+
+  // Add spacing to user menu items
+  .p-menu {
+    .p-menuitem {
+      margin-bottom: 0.25rem; // Add spacing between menu items
+    }
+
+    .p-menuitem-link {
+      padding: 0.75rem 1rem !important; // Increase padding for better spacing
+      gap: 0.75rem; // Space between icon and text
+    }
+
+    .p-menuitem-separator {
+      margin: 0.5rem 0; // Add margin to separator
+    }
+  }
+
+  // Add spacing between icon and text in header buttons
+  .p-button {
+    .p-button-icon {
+      margin-right: 0.5rem; // Add space between icon and label
+    }
+
+    // Ensure proper gap in button content
+    &.p-button-text,
+    &.p-button-sm {
+      gap: 0.5rem;
+    }
+  }
 }

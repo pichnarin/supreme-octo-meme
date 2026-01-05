@@ -29,10 +29,18 @@ export class BreadcrumbComponent implements OnInit {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
         this.breadcrumbs = this.createBreadcrumbs(this.activatedRoute.root);
+        // Don't show breadcrumbs on dashboard page
+        if (this.router.url === '/dashboard') {
+          this.breadcrumbs = [];
+        }
       });
 
     // Initial breadcrumbs
     this.breadcrumbs = this.createBreadcrumbs(this.activatedRoute.root);
+    // Don't show breadcrumbs on dashboard page
+    if (this.router.url === '/dashboard') {
+      this.breadcrumbs = [];
+    }
   }
 
   private createBreadcrumbs(
@@ -52,14 +60,21 @@ export class BreadcrumbComponent implements OnInit {
         .join('/');
 
       if (routeURL !== '') {
-        url += `/${routeURL}`;
+        // Split the route to handle flat paths like 'organization/sections'
+        const segments = routeURL.split('/');
+
+        // Build breadcrumbs for each segment
+        for (const segment of segments) {
+          url += `/${segment}`;
+
+          const label = this.getLabelForRoute(url);
+          if (label) {
+            breadcrumbs.push({ label, url });
+          }
+        }
       }
 
-      const label = this.getLabelForRoute(url);
-      if (label) {
-        breadcrumbs.push({ label, url });
-      }
-
+      // Recursively process child routes
       return this.createBreadcrumbs(child, url, breadcrumbs);
     }
 
